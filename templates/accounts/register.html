@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>تسجيل مستخدم جديد</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+
+    <h1>تسجيل مستخدم جديد</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>اسم المستخدم:</label><br>
+        <input type="text" name="username" required><br><br>
+
+        <label>كلمة المرور:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <label>الاسم الكامل:</label><br>
+        <input type="text" name="full_name" required><br><br>
+
+        <label>الدور:</label><br>
+        <select name="role" required>
+            <option value="client">عميل</option>
+            <option value="provider">مزود خدمة</option>
+            <option value="owner">مالك</option>
+        </select><br><br>
+
+        <button type="submit">تسجيل</button>
+    </form>
+
+</body>
+</html>

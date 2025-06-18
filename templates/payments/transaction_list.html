@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>قائمة المعاملات</title>
+</head>
+<body>
+    <h1>قائمة المعاملات</h1>
+
+    {% for transaction in transactions %}
+        <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+            <p>طلب: {{ transaction.order.id }}</p>
+            <p>المبلغ الإجمالي: {{ transaction.total_amount }}</p>
+            <p>نصيب المزود: {{ transaction.provider_share }}</p>
+            <p>رسوم المنصة: {{ transaction.platform_fee }}</p>
+            <p>تاريخ الإنشاء: {{ transaction.created_at }}</p>
+        </div>
+    {% empty %}
+        <p>لا توجد معاملات.</p>
+    {% endfor %}
+</body>
+</html>

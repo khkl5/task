@@ -1,5 +1,6 @@
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    # لاحقًا تضيفين المسارات هنا
+    path('', views.index, name='index'),
 ]

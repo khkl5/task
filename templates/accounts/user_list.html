@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>قائمة المستخدمين</title>
+</head>
+<body>
+    <h1>قائمة المستخدمين</h1>
+
+    {% for user in users %}
+        <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+            <p>الاسم الكامل: {{ user.full_name }}</p>
+            <p>الدور: {{ user.get_role_display }}</p>
+            <p>اسم المستخدم: {{ user.user.username }}</p>
+        </div>
+    {% empty %}
+        <p>لا يوجد مستخدمين.</p>
+    {% endfor %}
+</body>
+</html>

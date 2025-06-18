@@ -1,5 +1,7 @@
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    # لاحقًا تضيفين المسارات هنا
+    path('users/', views.user_list, name='user_list'),
+    path('register/', views.register, name='register'),  # صفحة التسجيل
 ]

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>موقع خدمتي - منصة العمل الحر</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f7f9fc; margin: 0; padding: 0;">
+
+    <!-- استدعاء الهيدر -->
+    {% include 'header.html' %}
+
+    <!-- بانر بتعريف الموقع -->
+    <section style="background: linear-gradient(90deg, #4a90e2, #50e3c2); color: white; padding: 80px 20px; text-align: center;">
+        <h1 style="font-size: 36px; margin-bottom: 20px;">مرحبا بك في موقع خدمتي</h1>
+        <p style="font-size: 20px; max-width: 700px; margin: auto;">
+            منصة عربية حديثة تتيح لك تقديم وشراء خدمات العمل الحر بكل سهولة واحترافية. ابدأ اليوم في تطوير أعمالك والوصول إلى آلاف العملاء في الوطن العربي.
+        </p>
+    </section>
+
+    <!-- محتوى إضافي -->
+    <section style="padding: 40px 20px; text-align: center;">
+        <h2 style="color: #333; font-size: 28px;">لماذا تختار موقع خدمتي؟</h2>
+        <p style="font-size: 18px; color: #666; max-width: 700px; margin: auto; line-height: 1.6;">
+            • سهولة الاستخدام <br/>
+            • حماية حقوق البائع والمشتري <br/>
+            • نظام تقييم موثوق <br/>
+            • دعم فني متواصل
+        </p>
+    </section>
+
+    <!-- استدعاء الفوتر -->
+    {% include 'footer.html' %}
+
+</body>
+</html>

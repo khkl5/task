@@ -3,8 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib import messages  # ✅ مهم للرسائل
 from .models import UserProfile
 from .forms import UserRegistrationForm
+
+# ✅ الصفحة الرئيسية
+def home(request):
+    return render(request, 'index.html')
 
 @login_required(login_url='login')
 def user_list(request):
@@ -19,7 +24,7 @@ def register(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # ✅ بعد التسجيل يروح لصفحة تسجيل الدخول
+            return redirect('login')  # بعد التسجيل يذهب للـ login
     else:
         form = UserRegistrationForm()
 
@@ -36,7 +41,9 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('user_list')
+            # ✅ نضيف رسالة ترحيب
+            messages.success(request, f'مرحبًا، {user.userprofile.full_name}!')
+            return redirect('home')  # يرجع إلى الصفحة الرئيسية
         else:
             error_message = 'اسم المستخدم أو كلمة المرور غير صحيحة'
             return render(request, 'accounts/login.html', {'error_message': error_message})

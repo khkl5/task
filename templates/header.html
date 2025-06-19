@@ -23,7 +23,7 @@
                 min-width: 150px;
                 z-index: 999;
             " id="dropdown-menu">
-                <li style="padding: 10px 20px; cursor: pointer;"><a href="#" style="color: #333; text-decoration: none;">الرئيسية</a></li>
+                <li style="padding: 10px 20px; cursor: pointer;"><a href="/" style="color: #333; text-decoration: none;">الرئيسية</a></li>
                 <li style="padding: 10px 20px; cursor: pointer;"><a href="#" style="color: #333; text-decoration: none;">الخدمات</a></li>
                 <li style="padding: 10px 20px; cursor: pointer;"><a href="#" style="color: #333; text-decoration: none;">من نحن</a></li>
                 <li style="padding: 10px 20px; cursor: pointer;"><a href="#" style="color: #333; text-decoration: none;">تواصل معنا</a></li>
@@ -33,7 +33,11 @@
 
     <!-- رابط حسابي -->
     <div>
-        <a href="#" style="color: white; text-decoration: none; font-size: 18px;">حسابي</a>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" style="color: white; text-decoration: none; font-size: 18px;">تسجيل دخول</a>
+        {% else %}
+            <a href="{% url 'login' %}" style="color: white; text-decoration: none; font-size: 18px;">حسابي</a>
+        {% endif %}
     </div>
 </header>
 

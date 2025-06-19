@@ -9,7 +9,7 @@
             background-color: #f0f2f5;
             display: flex;
             justify-content: center;
-            padding: 40px 0; /* ✅ بدل height: 100vh */
+            padding: 40px 0;
             margin: 0;
         }
         .card {
@@ -19,6 +19,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             width: 95%;
             max-width: 400px;
+            box-sizing: border-box;
         }
         .card h2 {
             text-align: center;
@@ -27,23 +28,25 @@
             font-size: 24px;
             font-weight: bold;
         }
-        label {
+        .card label {
             display: block;
             margin-bottom: 6px;
             color: #444;
             font-weight: 600;
             font-size: 15px;
         }
-        input, select {
+        .card input, .card select {
             width: 100%;
+            display: block;
             padding: 12px 14px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            margin-bottom: 18px; /* ✅ راحة بين الحقول */
+            margin-bottom: 18px;
             font-size: 15px;
             transition: border-color 0.3s;
+            box-sizing: border-box; /* ✅ مهم حتى لا تطلع خارج الكرت */
         }
-        input:focus, select:focus {
+        .card input:focus, .card select:focus {
             border-color: #4CAF50;
             outline: none;
         }
@@ -55,7 +58,7 @@
         .role-options {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 25px; /* ✅ زيادة مسافة قبل الزر */
+            margin-bottom: 25px;
         }
         .role-option {
             flex: 1;
@@ -69,6 +72,7 @@
             user-select: none;
             font-weight: 600;
             font-size: 15px;
+            box-sizing: border-box;
         }
         .role-option.selected {
             background-color: #4CAF50;
@@ -85,6 +89,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s;
+            box-sizing: border-box;
         }
         .submit-btn:hover {
             background-color: #45a049;

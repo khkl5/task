@@ -9,12 +9,83 @@
     <!-- استدعاء الهيدر -->
     {% include 'header.html' %}
 
-    <!-- ✅ عرض رسالة ترحيب مؤقتة -->
+    <!-- ✅ Popup Dialog -->
     {% if messages %}
         {% for message in messages %}
-            <div style="background-color: #e0f9e0; border: 1px solid #4CAF50; color: #4CAF50; padding: 12px; text-align: center; margin: 15px;">
-                {{ message }}
+            <!-- خلفية معتمة -->
+            <div id="popup-overlay" style="
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            ">
+                <!-- مربع الترحيب -->
+                <div style="
+                    background-color: white;
+                    border-radius: 12px;
+                    padding: 30px 20px;
+                    width: 320px;
+                    text-align: center;
+                    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                    animation: fadeIn 0.5s ease;
+                    position: relative;
+                ">
+                    <!-- علامة الصح -->
+                    <div style="
+                        background-color: #4CAF50;
+                        width: 80px;
+                        height: 80px;
+                        border-radius: 50%;
+                        margin: -60px auto 20px auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                    ">
+                        <span style="color: white; font-size: 40px;">✓</span>
+                    </div>
+
+                    <!-- نص الترحيب -->
+                    <h2 style="color: #333;">{{ message }}</h2>
+                    <p style="color: #666; margin-top: 10px;">تم تسجيل الدخول بنجاح. مرحبًا بك في موقع خدمتي!</p>
+
+                    <!-- زر موافق -->
+                    <button onclick="closePopup()" style="
+                        margin-top: 20px;
+                        padding: 12px 20px;
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    ">موافق</button>
+                </div>
             </div>
+
+            <script>
+                // إغلاق الـ popup
+                function closePopup() {
+                    document.getElementById('popup-overlay').style.display = 'none';
+                }
+
+                // ✅ ممكن نخليها تختفي تلقائيًا بعد 5 ثواني (اختياري)
+                setTimeout(() => {
+                    closePopup();
+                }, 5000);
+            </script>
+
+            <!-- Animation -->
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: scale(0.9); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+            </style>
         {% endfor %}
     {% endif %}
 
@@ -25,7 +96,7 @@
             منصة عربية حديثة تتيح لك تقديم وشراء خدمات العمل الحر بكل سهولة واحترافية. ابدأ اليوم في تطوير أعمالك والوصول إلى آلاف العملاء في الوطن العربي.
         </p>
 
-        <!-- ✅ زر إنشاء حساب جديد بالرابط الصحيح -->
+        <!-- زر إنشاء حساب جديد -->
         <a href="{% url 'register' %}" style="display: inline-block; padding: 12px 24px; background-color: #ffffff; color: #4a90e2; font-size: 18px; border-radius: 6px; text-decoration: none; transition: background-color 0.3s, color 0.3s;">
             إنشاء حساب جديد
         </a>

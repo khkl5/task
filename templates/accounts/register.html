@@ -3,32 +3,206 @@
 <head>
     <meta charset="UTF-8" />
     <title>تسجيل مستخدم جديد</title>
+    <style>
+        body {
+            font-family: 'Cairo', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0; /* ✅ بدل height: 100vh */
+            margin: 0;
+        }
+        .card {
+            background-color: #fff;
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 95%;
+            max-width: 400px;
+        }
+        .card h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #444;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 18px; /* ✅ راحة بين الحقول */
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .validation-message {
+            font-size: 13px;
+            margin-top: -12px;
+            margin-bottom: 12px;
+        }
+        .role-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px; /* ✅ زيادة مسافة قبل الزر */
+        }
+        .role-option {
+            flex: 1;
+            text-align: center;
+            background-color: #e0e0e0;
+            padding: 12px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s, color 0.3s;
+            user-select: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .role-option.selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif; padding: 20px;">
 
-    <h1>تسجيل مستخدم جديد</h1>
+<body>
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="card">
+        <h2>تسجيل مستخدم جديد</h2>
 
-        <label>اسم المستخدم:</label><br>
-        <input type="text" name="username" required><br><br>
+        <form method="post">
+            {% csrf_token %}
 
-        <label>كلمة المرور:</label><br>
-        <input type="password" name="password" required><br><br>
+            {% for field in form %}
+                {% if field.name != 'role' %}
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: red; font-size: 14px; margin-top: 4px;">{{ field.errors }}</div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small style="color: #888;">{{ field.help_text }}</small>
+                    {% endif %}
 
-        <label>الاسم الكامل:</label><br>
-        <input type="text" name="full_name" required><br><br>
+                    {% if field.name == 'username' %}
+                        <div id="username-msg" class="validation-message"></div>
+                    {% elif field.name == 'phone_number' %}
+                        <div id="phone-msg" class="validation-message"></div>
+                    {% elif field.name == 'email' %}
+                        <div id="email-msg" class="validation-message"></div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
 
-        <label>الدور:</label><br>
-        <select name="role" required>
-            <option value="client">عميل</option>
-            <option value="provider">مزود خدمة</option>
-            <option value="owner">مالك</option>
-        </select><br><br>
+            <!-- حقل الدور -->
+            <label style="margin-top: 10px;">الدور:</label>
+            <div class="role-options">
+                {% for value, label in form.fields.role.choices %}
+                    <div class="role-option {% if form.role.value == value %}selected{% endif %}" data-value="{{ value }}">
+                        <input type="radio" name="role" value="{{ value }}" {% if form.role.value == value %}checked{% endif %} style="display:none;">
+                        {{ label }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% if form.role.errors %}
+                <div style="color: red;">{{ form.role.errors }}</div>
+            {% endif %}
 
-        <button type="submit">تسجيل</button>
-    </form>
+            <!-- زر التسجيل -->
+            <button type="submit" class="submit-btn">تسجيل</button>
+        </form>
+    </div>
+
+    <!-- كود اختيار الدور -->
+    <script>
+        document.querySelectorAll('.role-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+    </script>
+
+    <!-- كود التحقق الفوري -->
+    <script>
+        function debounce(func, delay) {
+            let timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, delay);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.querySelector('input[name="username"]');
+            const emailInput = document.querySelector('input[name="email"]');
+            const phoneInput = document.querySelector('input[name="phone_number"]');
+
+            if (usernameInput) {
+                usernameInput.addEventListener('input', debounce(function() {
+                    fetch(`/validate-username/?username=${usernameInput.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const msg = document.getElementById('username-msg');
+                            msg.style.color = data.is_taken ? 'red' : 'green';
+                            msg.innerText = data.is_taken ? 'اسم المستخدم مستخدم ❌' : 'اسم المستخدم متاح ✅';
+                        });
+                }, 500));
+            }
+
+            if (emailInput) {
+                emailInput.addEventListener('input', debounce(function() {
+                    fetch(`/validate-email/?email=${emailInput.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const msg = document.getElementById('email-msg');
+                            msg.style.color = data.is_taken ? 'red' : 'green';
+                            msg.innerText = data.is_taken ? 'البريد الإلكتروني مستخدم ❌' : 'البريد الإلكتروني متاح ✅';
+                        });
+                }, 500));
+            }
+
+            if (phoneInput) {
+                phoneInput.addEventListener('input', debounce(function() {
+                    fetch(`/validate-phone/?phone_number=${phoneInput.value}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const msg = document.getElementById('phone-msg');
+                            msg.style.color = data.is_taken ? 'red' : 'green';
+                            msg.innerText = data.is_taken ? 'رقم الجوال مستخدم ❌' : 'رقم الجوال متاح ✅';
+                        });
+                }, 500));
+            }
+        });
+    </script>
 
 </body>
 </html>

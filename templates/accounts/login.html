@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>تسجيل الدخول</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px;">
+        <h2 style="text-align: center; color: #333;">تسجيل الدخول</h2>
+
+        {% if error_message %}
+            <div style="color: red; text-align: center; margin-bottom: 15px;">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <form method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+
+            <label style="display: block; margin-bottom: 8px; color: #555;">اسم المستخدم:</label>
+            <input type="text" name="username" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 15px;">
+
+            <label style="display: block; margin-bottom: 8px; color: #555;">كلمة المرور:</label>
+            <input type="password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 20px;">
+
+            <button type="submit" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer;">
+                دخول
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

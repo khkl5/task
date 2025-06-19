@@ -6,12 +6,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # الصفحة الرئيسية (index)
-    path('', include('marketplace.urls')),  # ← هذا السطر يربط index.html
+    # الصفحة الرئيسية
+    path('', include('marketplace.urls')),  # لو تبغين index.html هنا
 
-    # روابط التطبيقات الأخرى
+    # روابط التطبيقات
     path('accounts/', include('accounts.urls')),
-    path('marketplace/', include('marketplace.urls')),
     path('payments/', include('payments.urls')),
 ]
 
